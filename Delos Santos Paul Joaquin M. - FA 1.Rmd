@@ -1,0 +1,130 @@
+---
+title: "FA - 1"
+author: "paul"
+date: "2024-02-01"
+output: html_document
+---
+
+
+### Write the skewness program, and use it to calculate the skewness coefficient of the four examination subjects in results.txt (results.csv). What can you say about these data?
+
+Pearson has given an approximate formula for the skewness that is easier to calculate than the exact formula given in Equation 2.1.
+
+
+
+```{r load_data, echo=FALSE, message=FALSE}
+data <- read.csv("results.csv", na.strings = c("", "NA"))
+
+calculate_skewness <- function(datas) {
+  mean_value <- mean(datas, na.rm = TRUE)
+  median_value <- median(datas, na.rm = TRUE)
+  sd_value <- sd(datas, na.rm = TRUE)
+  
+  if (sd_value == 0) {
+    return(NA)
+  }
+  
+  skewness <- 3 * (mean_value - median_value) / sd_value
+  
+  return(skewness)
+}
+
+subjects <- colnames(data)[-1]  
+skewness_results <- data.frame(Subject = character(), Skewness = numeric())
+
+for (subject in subjects) {
+  skewness <- calculate_skewness(data[[subject]])
+  skewness_results <- rbind(skewness_results, data.frame(Subject = subject, Skewness = skewness))
+}
+
+print(skewness_results)
+
+library(e1071)  
+
+pearson_skewness <- apply(data[, -1], 2, skewness, na.rm = TRUE)
+comparison_results <- data.frame(Subject = names(pearson_skewness), Pearson_Skewness = pearson_skewness)
+print(comparison_results)
+
+``` 
+
+
+
+### Explanation 
+
+~ Pearson Case 
+
+- Compared to sample skewness, it is less sensitive to extreme values, less precise, and can be used for quickly computed skewness estimates.
+- It works well with data that is regularly disseminated.
+
+~ Normal Skewness case 
+
+- It is sensitive to extreme values in the data and is based on moments.
+- When working with real-world data samples, it is commonly used.
+
+
+
+
+### NO.2 
+```{r echo = FALSE , message=FALSE}
+females <- c(57, 59, 78, 79, 60, 65, 68, 71, 75, 48, 51, 55, 56, 41, 43, 44, 75, 78, 80, 81, 83, 83, 85)
+males <- c(48, 49, 49, 30, 30, 31, 32, 35, 37, 41, 86, 42, 51, 53, 56, 42, 44, 50, 51, 65, 67, 51, 56, 58, 64, 64, 75)
+
+gender <- factor(c(rep("Female", length(females)), rep("Male", length(males))))
+
+females
+males
+gender
+
+males[34] <- 46
+
+save.image(file = "computing_class_workspace.RData")
+
+stem(females)
+
+stem(males)
+
+boxplot(list(Females = females, Males = males), 
+        main = "Java Programming Exam Results by Gender", 
+        xlab = "Gender", ylab = "Marks",
+        col = c("lightblue", "lightgreen"))
+
+par(mfrow=c(1,2))
+hist(females, xlab="Grades", main="Histogram - Females", col="lightblue", border="black")
+hist(males, xlab="Grades", main="Histogram - Males", col="lightgreen", border="black")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+### Advantages 
+### The stem-and-leaf display and the traditional histogram are both graphical representations used to visualize the distribution of a dataset. 
+
+- Individual Data Points: The stem-and-leaf display's ability to preserve individual data points makes it possible to view every observation in the dataset, which is one of its main advantages. A histogram, on the other hand, gathers data into bars. A more in-depth perspective of the distribution is offered by the stem-and-leaf display, which makes it easier to pinpoint particular values and their frequencies.
+
+- Data Integrity: A histogram loses some information because of bundling, but a stem-and-leaf display allows you to piece together the original dataset from the plot. When the original data points are essential for analysis or interpretation, this may be significant.
+
+- Comparison of Groups: The side-by-side stem-and-leaf displays for males and females enable a clear visual comparison of their distributions when comparing groups, as in your example with exam results by gender. This makes it easier to quickly recognize any parallels or discrepancies between the two groups.
+ 
+ 
+ ### BOX PLOT FINDINGS 
+ 
+ - Base Tendency:
+
+~ Females: A balanced distribution of scores among females is suggested by the fact that the median (center of the box) for females seems to be approximately in the middle of the interquartile range.
+~ Males: The center part of the male score distribution appears to be skewed towards higher values, as indicated by the male median score appearing to be slightly higher than the female median.
+
+- Distribution of Scores:
+
+~ Females: The interquartile range (IQR) indicates a moderate spread of scores within the center 50% of the data. It is comparatively constant.
+
+~ Males: A greater range of scores inside the middle 50% of the data is indicated by the broader IQR for males. This implies that male scores vary more widely.
+ 
+ 
