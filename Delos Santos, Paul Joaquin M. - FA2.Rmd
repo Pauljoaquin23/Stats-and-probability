@@ -1,0 +1,48 @@
+---
+title: "Die Rolling Experiment"
+author: "Paul Joaquin M. Delos Santos"
+date: "2024-02-17"
+output: html_document
+---
+### **FA2 Questions**
+
+### **3.** An experiment consists of rolling a die. Use R to simulate this experiment 600 times and obtain the relative frequency of each possible outcome. Hence, estimate the probability of getting each of 1, 2, 3, 4, 5, and 6.
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(123)  # Setting seed for reproducibility
+num_simulations <- 600
+die_outcomes <- sample(1:6, num_simulations, replace = TRUE)
+# Calculate relative frequencies
+relative_frequencies <- table(die_outcomes) / num_simulations
+
+
+```
+
+### Simulating Die Rolling Experiment and its Results
+
+```{r,echo=FALSE, message=FALSE}
+# Display relative frequencies
+print(relative_frequencies)
+```
+
+In this section, we set up the R Markdown document and performed the die rolling experiment by simulating it 600 times. We calculated the relative frequencies for each possible die outcome (1, 2, 3, 4, 5, and 6).
+
+
+
+
+
+
+### Bar Graph
+
+```{r, echo=FALSE, message=FALSE}
+# Create a bar graph for probability estimation
+barplot(relative_frequencies, main = "Probability of rolling Die Outcomes",
+        xlab = "Die Outcome", ylab = "Probability", col = "skyblue", ylim = c(0, 0.3))
+
+# Display probability values above the bars
+text(1:6, relative_frequencies + 0.02, labels = round(relative_frequencies, 3), pos = 3)
+```
+
+In this section, we created a bar graph to visually represent the probabilities of each die outcome. The x-axis represents the die outcomes, and the y-axis represents the probability of each outcome. Probability values are displayed above the corresponding bars in the graph.
+
