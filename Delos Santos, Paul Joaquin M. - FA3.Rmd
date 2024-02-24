@@ -1,0 +1,126 @@
+---
+title: "FA3"
+author: "Paul Joaquin M. Delos Santos"
+date: "2024-02-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question (2)
+2.  A binary communication channel carries data as one of two sets of signals denoted by 0 and 1. Owing to noise, a transmitted 0 is sometimes received as a 1, and a transmitted 1 is sometimes received as a 0. For a given channel, it can be assumed that a transmitted 0 is correctly received with probability 0.95, and a transmitted 1 is correctly received with probability 0.75. Also, 70% of all messages are transmitted as a 0. If a signal is sent, determine the probability that:
+
+(a) a 1 was received;
+(b) a 1 was transmitted given than a 1 was received. 
+
+We have the following probabilities:
+
+** Given Information ** 
+
+- \( P(R_0 | T_0) \) - Probability of receiving a 0 when a 0 is transmitted (correctly received 0): 0.95.
+
+- \( P(R_1 | T_1) \) - Probability of receiving a 1 when a 1 is transmitted (correctly received 1): 0.75.
+
+- \( P(T_0) \) - Probability of transmitting a 0: 0.70.
+
+## (a) Probability that a 1 was received
+Using the law of total probability, we can calculate the probability of receiving a 1:
+
+
+```{r probabilities, echo=FALSE}
+P_R0_T0 <- 0.95
+P_R1_T1 <- 0.75
+P_T0 <- 0.70
+
+P_T1 <- 1 - P_T0
+
+
+```
+##Probability of Receiving a 1 (a)
+
+Using the law of total probability:
+
+P(R1​)=P(R1​∣T0​)⋅P(T0​)+P(R1​∣T1​)⋅P(T1​)
+
+```{r, echo=FALSE}
+P_R1 <- P_R0_T0 * P_T0 + P_R1_T1 * P_T1
+P_R1
+
+
+```
+
+
+## (b) Probability that a 1 was transmitted given that a 1 was received
+
+Using Bayes' Theorem
+
+```{r, echo=FALSE}
+P_T1_given_R1 <- (P_R1_T1 * P_T1) / P_R1
+P_T1_given_R1
+
+
+
+```
+
+## Question (7)
+There are three employees working at an IT company: Jane, Amy, and Ava, doing 10%, 30%, and 60% of the programming, respectively. 8% of Jane’s work, 5% of Amy’s work, and just 1% of Ava‘s work is in error. What is the overall percentage of error? If a program is found with an error, who is the most likely person to have written it? 
+
+## Get overall percentage error
+The overall percentage of error (P(E)) can be calculated using the law of total probability:
+
+P(E)=P(E∣J)⋅P(J)+P(E∣A)⋅P(A)+P(E∣V)⋅P(V)
+
+```{r, echo=FALSE}
+P_J <- 0.10
+P_A <- 0.30
+P_V <- 0.60
+
+P_E_J <- 0.08
+P_E_A <- 0.05
+P_E_V <- 0.01
+
+P_E <- P_E_J * P_J + P_E_A * P_A + P_E_V * P_V
+P_E
+
+
+
+```
+## Probability of Each Employee Given an Error
+calculate the conditional probabilities of each person given an error:
+
+P(J∣E)=P(E∣J)⋅P(J)​/P(E)
+
+P(A∣E)=P(E∣A)⋅P(A)​/P(E)
+
+P(V∣E)=P(E∣V)⋅P(V)​/P(E)
+
+```{r, echo=FALSE}
+P_J_given_E <- (P_E_J * P_J) / P_E
+P_A_given_E <- (P_E_A * P_A) / P_E
+P_V_given_E <- (P_E_V * P_V) / P_E
+c(P_J_given_E, P_A_given_E, P_V_given_E)
+
+
+
+
+```
+
+
+##The probabilities of each employee writing a program with an error are approximately:
+
+```{r, echo=FALSE}
+most_likely_person <- which.max(c(P_E_J * P_J, P_E_A * P_A, P_E_V * P_V))
+most_likely_person_name <- ifelse(most_likely_person == 1, "Jane", ifelse(most_likely_person == 2, "Amy", "Ava"))
+most_likely_person_name
+
+
+
+
+
+
+```
+
+
+as we can see amy has the highest approximation for the error in writing a program.
