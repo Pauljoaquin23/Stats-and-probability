@@ -1,0 +1,127 @@
+---
+title: "FA7"
+author: "Paul Joaquin M. Delos Santos"
+date: "2024-02-29"
+output: html_document
+---
+## FA7
+
+## QUESTION (1)
+1) In Example 16.3 with 𝜆 = 4 per minute, use R to obtain:
+(a) P(T ≤ 0.25) = P(time between submissions is at most 15 seconds);
+
+(b) P(T > 0.5) = P(time between submissions is greater than 30 seconds);
+
+(c) P(0.25 < T < 1) = P(time between submissions is between 15 seconds
+and 1 minute)
+```{r setup, include=FALSE}
+# Set the lambda value
+lambda <- 4
+
+prob_a <- ppois(0.25, lambda)
+cat("P(T ≤ 0.25) =", prob_a, "\n")
+
+prob_b <- 1 - ppois(0.5, lambda)
+cat("P(T > 0.5) =", prob_b, "\n")
+
+prob_c <- ppois(1, lambda) - ppois(0.25, lambda)
+cat("P(0.25 < T < 1) =", prob_c, "\n")
+
+
+```
+
+
+```{r, echo=FALSE}
+
+cat(" Results\n\n")
+cat("1. **P(T ≤ 0.25):** ", prob_a, "\n")
+cat("2. **P(T > 0.5):** ", prob_b, "\n")
+cat("3. **P(0.25 < T < 1):** ", prob_c, "\n")
+
+```
+
+## QUESTION (3)
+The average rate of job submissions in a computer center is 2 per minute. If
+it can be assumed that the number of submissions per minute has a Poisson
+distribution, calculate the probability that:
+
+(a) more than two jobs will arrive in a minute;
+
+(b) at least 30 seconds will elapse between any two job
+s;
+(c) less than 30 seconds will elapse between jobs;
+
+(d) a job will arrive in the next 30 seconds, if no jobs have arrived in the last
+30 seconds.
+
+``` {r, echo=FALSE}
+lambda <- 2
+
+prob3_a <- 1 - ppois(2, lambda)
+
+prob3_b <- ppois(0, lambda)
+
+prob3_c <- ppois(1, lambda)
+
+prob3_d <- ppois(1, lambda/2)
+
+```
+
+
+
+
+```{r, echo=FALSE}
+
+cat(" Results\n\n")
+cat("1. **P(more than two jobs will arrive in a minute):** ", prob3_a, "\n")
+cat("2. **P(at least 30 seconds will elapse between any two jobs):** ", prob3_b, "\n")
+cat("3. **P(less than 30 seconds will elapse between jobs):** ", prob3_c, "\n")
+cat("4. **P(a job will arrive in the next 30 seconds, if no jobs have arrived in the last 30 seconds):** ", prob3_d, "\n")
+
+```
+
+## QUESTION (7)
+A website receives an average of 15 visits per hour, which arrive following a
+Poisson distribution.
+
+(a) Calculate the probability that at least 10 minutes will elapse without a
+visit.
+
+(b) What is the probability that in any hour, there will be less than eight visits?
+
+(c) Suppose that 15 minutes have elapsed since the last visit, what is the probability that a visit will occur in the next 15 minutes.
+
+(d) Calculate the top quartile, and explain what it means
+
+```{r, echo=FALSE}
+
+lambda <- 15 / 60  
+
+prob7_a <- ppois(0, lambda * 10)
+
+prob7_b <- ppois(7, lambda * 60)
+
+prob7_c <- 1 - ppois(0, lambda * 15)
+
+top_quartile <- qpois(0.75, lambda * 60)
+
+
+```
+
+
+
+```{r, echo=FALSE}
+
+# Display the results
+cat(" Results\n\n")
+cat("1. **Probability that at least 10 minutes will elapse without a visit:** ", prob7_a, "\n")
+cat("2. **Probability that in any hour, there will be less than eight visits:** ", prob7_b, "\n")
+cat("3. **Probability that a visit will occur in the next 15 minutes (given 15 minutes have elapsed since the last visit):** ", prob7_c, "\n")
+cat("4. **Top quartile (number of visits):** ", top_quartile, "\n")
+
+
+
+
+```
+
+For instance, if top_quartile is 20, it indicates that there are 20 visits or fewer in 75% of the hours. This is so because the value that 75% of the data goes below is represented by the top quartile. Therefore, 20 or fewer visits are anticipated during most hours. In conclusion, an amount that divides the top 25% of hours in terms of visits is provided by the top quartile. It provides light on the higher end of the distribution to help in understanding the variability in the visits per hour distribution.
