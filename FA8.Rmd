@@ -1,0 +1,73 @@
+---
+title: "FA8"
+author: "Paul Joaquin M. Delos Santos"
+date: "2024-04-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Problem 1
+## Part (a)
+mean_signal <- 200
+var_signal <- 256
+prob_exceed_224 <- 1 - pnorm(224, mean = mean_signal, sd = sqrt(var_signal))
+prob_exceed_224
+```
+
+## Part (b)
+```{r}
+prob_between_186_224 <- pnorm(224, mean = mean_signal, sd = sqrt(var_signal)) - pnorm(186, mean = mean_signal, sd = sqrt(var_signal))
+prob_between_186_224
+```
+
+
+## Part (c)
+
+```{r}
+microvoltage_25 <- qnorm(0.25, mean = mean_signal, sd = sqrt(var_signal))
+microvoltage_25
+```
+
+## Part (d)
+
+```{r}
+prob_less_240_given_greater_210 <- pnorm(240, mean = mean_signal, sd = sqrt(var_signal), lower.tail = TRUE) - pnorm(210, mean = mean_signal, sd = sqrt(var_signal), lower.tail = TRUE)
+prob_less_240_given_greater_210
+```
+
+## Part (e)
+
+```{r}
+interquartile_range <- qnorm(c(0.25, 0.75), mean = mean_signal, sd = sqrt(var_signal))
+interquartile_range[2] - interquartile_range[1]
+```
+
+## Part (f)
+```{r}
+prob_less_220_given_greater_210 <- pnorm(220, mean = mean_signal, sd = sqrt(var_signal), lower.tail = TRUE) - pnorm(210, mean = mean_signal, sd = sqrt(var_signal), lower.tail = TRUE)
+prob_less_220_given_greater_210
+```
+
+
+## Part (g)
+```{r}
+prob_greater_220_given_greater_200 <- (1 - pnorm(220, mean = mean_signal, sd = sqrt(var_signal))) / (1 - pnorm(200, mean = mean_signal, sd = sqrt(var_signal)))
+prob_greater_220_given_greater_200
+```
+
+
+## Problem 2 
+
+## Part (a)
+
+```{r}
+mean_downtime <- 25
+var_downtime <- 144
+bounds_95_percent <- qnorm(c(0.025, 0.975), mean = mean_downtime, sd = sqrt(var_downtime))
+bounds_95_percent
+```
+
+```{r}
+bound_above_10_percent <- qnorm(0.9, mean = mean_downtime, sd = sqrt(var_downtime))
+bound_above_10_percent
+```
